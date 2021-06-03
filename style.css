@@ -22,12 +22,17 @@
     padding-left: 3%;
 }
 
+.miniscreen {
+    display: flex;
+    height: 20%;
+}
+
 #clear {
     display: block;
     height: 50%;
     width: 100%;
 }
-#clear1{
+#delete-one{
     width: 100%;
     height:50%;
 }
