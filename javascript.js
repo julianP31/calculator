@@ -66,7 +66,12 @@ let operators = {
     "+": (n1, n2) => n1 + n2,
     "-": (n1, n2) => n1 - n2,
     "*": (n1, n2) => n1 * n2,
-    "/": (n1, n2) => n1 / n2,
+    "/": function divide(n1, n2){
+        if (n2 === 0){
+            return divideError()
+        } 
+        return n1 / n2
+    }
 }
 
 function clearAll(){
@@ -81,3 +86,10 @@ function ChangeOperationRealized(){
         return operationRealized = false
     }
 }
+
+function divideError(){
+    clearAll()
+    firstNumbers = ""
+    return  ShowMiniScreen("cant divide for ",0)
+}
+
