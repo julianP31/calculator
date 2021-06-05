@@ -1,5 +1,5 @@
 
-let firstNumbers;
+let numbers = [];
 let operatorUsed;
 let operationResult;
 let operationRealized = true
@@ -23,21 +23,32 @@ const $operators = document.querySelectorAll(".operator")
 $operators.forEach((operator) => {
     operator.addEventListener("click", () => {
         ChangeOperationRealized()
-        firstNumbers = Number($display.textContent)
+        pushNumberToArray(numbers)
+        numbersLimitator(numbers,2)
         operatorUsed =operators[operator.textContent]
-        ShowMiniScreen (firstNumbers, operator.textContent)
+        ShowMiniScreen (numbers, operator.textContent)
         $display.textContent= ""
         
-        // console.log(operators[operator.textContent](firstNumbers,Number( $display.textContent)))
+        // console.log(operators[operator.textContent](numbers,Number( $display.textContent)))
     })
 })
-
+function pushNumberToArray(array) {
+    if (array.length >1 && Number($display.textContent)){
+        array.shift()
+        array.push( Number($display.textContent))
+    } 
+     if (array.length <=2 ){
+        array.push( Number($display.textContent))
+    }
+}
 const $result = document.querySelector(".result").addEventListener("click", function resultado(){
     if(operationRealized === false){
-    miniscreen.textContent += Number($display.textContent) 
-    operationResult = $display.textContent= operate(operatorUsed, firstNumbers, Number($display.textContent))
+    pushNumberToArray(numbers)
+    miniscreen.textContent += numbers[1]
+    operationResult = operate(operatorUsed, numbers[0], numbers[1])
     $display.textContent= operationResult
     operatorUsed = ""
+    numbersLimitator(numbers, 1)
     ChangeOperationRealized()
 } else if (operationRealized === true){
     miniscreen.textContent = operationResult
@@ -77,6 +88,7 @@ let operators = {
 function clearAll(){
     $display.textContent = ""
     miniscreen.textContent = ""
+    numbers = []
 }
 
 function ChangeOperationRealized(){
@@ -89,7 +101,14 @@ function ChangeOperationRealized(){
 
 function divideError(){
     clearAll()
-    firstNumbers = ""
-    return  ShowMiniScreen("cant divide for ",0)
+    numbers.push ()
+    return ShowMiniScreen("cant divide for ",0)
 }
+
+function numbersLimitator(array, i){
+    for (let index = i; index <= array.length; index++) {
+        array.shift()
+    }
+}
+
 
