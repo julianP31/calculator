@@ -15,6 +15,7 @@ const $buttonDeleteOne = document.querySelector("#delete-one").addEventListener(
 const $buttons = document.querySelectorAll(".key")
 $buttons.forEach((number) => {
     number.addEventListener("click", () => {
+        if($display.textContent.length > 25) $display.textContent = $display.textContent.substring(0,25);
         addElement(number.textContent)
     })
 })
@@ -28,8 +29,6 @@ $operators.forEach((operator) => {
         operatorUsed =operators[operator.textContent]
         ShowMiniScreen (numbers, operator.textContent)
         $display.textContent= ""
-        
-        // console.log(operators[operator.textContent](numbers,Number( $display.textContent)))
     })
 })
 function pushNumberToArray(array) {
@@ -53,7 +52,6 @@ const $result = document.querySelector(".result").addEventListener("click", func
 } else if (operationRealized === true){
     miniscreen.textContent = operationResult
 }
-    
 })
 
 function addElement(value) {
@@ -61,9 +59,7 @@ function addElement(value) {
 }
 
 function ShowMiniScreen (value, operator){
-    
     miniscreen.textContent = `${value}${operator}`
-
 }
 
 function operate(operator, n1, n2) {
@@ -111,4 +107,12 @@ function numbersLimitator(array, i){
     }
 }
 
+window.addEventListener("keydown", (e)=>{
+    if($display.textContent.length > 25) $display.textContent = $display.textContent.substring(0,25);
+    if (toString(e.key) !==Object.keys(operators)){
+        addElement(e.key )
+        console.log(e.key)
+    }
+    
+})
 
