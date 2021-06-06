@@ -13,6 +13,9 @@ const $buttonDeleteOne = document.querySelector("#delete-one").addEventListener(
     $display.textContent = str.slice(0, -1)
 })
 const $buttons = document.querySelectorAll(".key")
+const $dot =document.querySelector(".dot").addEventListener("click", function(){
+    dotLimiter()
+})
 $buttons.forEach((number) => {
     number.addEventListener("click", () => {
         if($display.textContent.length > 25) $display.textContent = $display.textContent.substring(0,25);
@@ -23,6 +26,7 @@ $buttons.forEach((number) => {
 const $operators = document.querySelectorAll(".operator")
 $operators.forEach((operator) => {
     operator.addEventListener("click", () => {
+        document.querySelector(".dot").removeAttribute("disabled")
         ChangeOperationRealized()
         pushNumberToArray(numbers)
         numbersLimitator(numbers,2)
@@ -40,17 +44,19 @@ function pushNumberToArray(array) {
         array.push( Number($display.textContent))
     }
 }
-const $result = document.querySelector(".result").addEventListener("click", function resultado(){
+const $result = document.querySelector("#result").addEventListener("click", function resultado(){
     if(operationRealized === false){
     pushNumberToArray(numbers)
     miniscreen.textContent += numbers[1]
     operationResult = operate(operatorUsed, numbers[0], numbers[1])
-    $display.textContent= operationResult
+    $display.textContent= parseFloat(operationResult.toFixed(2)); 
     operatorUsed = ""
     numbersLimitator(numbers, 1)
     ChangeOperationRealized()
+    document.querySelector(".dot").removeAttribute("disabled")
 } else if (operationRealized === true){
     miniscreen.textContent = operationResult
+    document.querySelector(".dot").removeAttribute("disabled")
 }
 })
 
@@ -85,6 +91,8 @@ function clearAll(){
     $display.textContent = ""
     miniscreen.textContent = ""
     numbers = []
+    operationResult =""
+    document.querySelector(".dot").removeAttribute("disabled")
 }
 
 function ChangeOperationRealized(){
@@ -107,12 +115,18 @@ function numbersLimitator(array, i){
     }
 }
 
-window.addEventListener("keydown", (e)=>{
-    if($display.textContent.length > 25) $display.textContent = $display.textContent.substring(0,25);
-    if (toString(e.key) !==Object.keys(operators)){
-        addElement(e.key )
-        console.log(e.key)
-    }
-    
-})
+function searchDot(){
+        if ($display.textContent.match(/\./)) {
+            return true;
+        } else {
+            return false;
+        }
+}
 
+function dotLimiter(){
+    if (searchDot() === true){
+        str = $display.textContent
+        $display.textContent = str.slice(0, -1)
+        document.querySelector(".dot").setAttribute("disabled", "");
+    }
+}

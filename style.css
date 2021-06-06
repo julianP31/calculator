@@ -68,6 +68,9 @@ html {
     border: 1px solid #969696;
     font-weight: 900;
 }
+#container button:hover{
+    background:#eaeaea;
+}
 
 #container .buttons button {
     height: 60px;
@@ -77,4 +80,13 @@ html {
 
 .operator{
     color: rgb(0 19 255);
+}
+
+#container .buttons #result{
+    background: #f0595f;
+    color: #fff;
+    border-color: #b0353a;
+}
+#container .buttons #result:hover {
+ background-color: #f17377;
 }
